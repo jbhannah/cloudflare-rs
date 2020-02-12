@@ -93,7 +93,10 @@ impl<'a> Endpoint<DnsRecord, (), UpdateDnsRecordParams<'a>> for UpdateDnsRecord<
         Method::Put
     }
     fn path(&self) -> String {
-        format!("zones/{}/dns_records/{}", self.zone_identifier, self.identifier)
+        format!(
+            "zones/{}/dns_records/{}",
+            self.zone_identifier, self.identifier
+        )
     }
     fn body(&self) -> Option<UpdateDnsRecordParams<'a>> {
         Some(self.params.clone())
@@ -147,7 +150,7 @@ pub struct Meta {
 /// Type of the DNS record, along with the associated value.
 /// When we add support for other types (LOC/SRV/...), the `meta` field should also probably be encoded
 /// here as an associated, strongly typed value.
-#[derive(Deserialize, Serialize, Clone, Debug)]
+#[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
 #[serde(tag = "type")]
 pub enum DnsContent {
     A { content: Ipv4Addr },
